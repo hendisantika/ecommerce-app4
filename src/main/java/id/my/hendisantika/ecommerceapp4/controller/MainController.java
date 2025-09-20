@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,6 +133,65 @@ public class MainController {
 
         httpSession.setAttribute("status", "registered-success");
         return "redirect:/register";
+    }
+
+    /*
+     * EXPLANATION OF REGISTER METHOD
+     *
+     * This function is a method that handles a POST request to the
+     * "/process-registration" URL. It is used to register a new user in the
+     * application.
+     *
+     * If the user input is not valid, return the user to the registration page.
+     *
+     * If the user did not select a role, redirect them to the registration page and
+     * set a status message.
+     *
+     * If the user did not enter a confirm password, redirect them to the
+     * registration page and set a status message.
+     *
+     * If the password and confirm password do not match, redirect the user to the
+     * registration page and set a status message.
+     *
+     * Set the user's role based on their input.
+     *
+     * Set the user's account to be enabled, set the default profile picture, and
+     * encrypt the password.
+     *
+     * Save the user to the database.
+     *
+     * If there is a database error, redirect the user to the registration page and
+     * set a status message.
+     *
+     * If there is any other error, set a status message and print the stack trace.
+     *
+     * Set a success status message and redirect the user to the registration page.
+     *
+     */
+
+
+    @GetMapping("/login")
+    public String loginPage(Model m) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            User user = this.userRepo.loadUserByUserName(auth.getName());
+
+            if (user.getRole().equals("ROLE_CUSTOMER")) {
+                return "redirect:/customer/home";
+            }
+            if (user.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/home";
+            }
+            if (user.getRole().equals("ROLE_SELLER")) {
+                return "redirect:/seller/home";
+            }
+
+        }
+
+        m.addAttribute("title", "Login | StoreWala");
+        return "login";
     }
 
 }
