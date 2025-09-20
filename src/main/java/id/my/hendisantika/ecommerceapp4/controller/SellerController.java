@@ -119,6 +119,29 @@ public class SellerController {
             e.printStackTrace();
             return "redirect:/seller/home?internalError";
         }
-
     }
+
+    /*
+	 *                         Explanation of add new product method
+	 *
+	 * This above method is a  that handles requests to add a new product.
+	 It has several parameters, including the product to be added, the result of validating the product,
+	 a list of images for the product, the selected product category, a model object, the current HTTP session,
+	 the authenticated user's principal, and a redirect attributes object.
+
+	 The method first checks if the product has any validation errors, and if it does,
+	 it adds the product and a list of categories to the model and returns the "seller/index" view.
+
+	 If the number of images for the product exceeds 5, the method sets an attribute in the HTTP session
+	 and redirects the user to the home page for sellers.
+
+	 Otherwise, the method loops through the list of images, saves each one to a file,
+	 and adds the image name to a list of product images.
+	 The method then sets the seller ID, seller name, and category for the product, sets the images list for the product,
+	 and saves the product to the database. If any exceptions occur during this process,
+	 the method sets an attribute in the HTTP session and redirects the user to the home page for sellers.
+	 Finally, the method sets an attribute in the HTTP session, redirects the user to the home page for sellers,
+	 and appends a query parameter to the URL indicating that a product was added.
+
+	 */
 }
