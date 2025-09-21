@@ -179,9 +179,8 @@
 <!-- ================ SECTION INTRO ================ -->
 
 
-<input id="status" th:value="${session.status}" type="hidden">
-<th:block th:if="${session.status}"
-          th:text="${#session.removeAttribute('status')}"></th:block>
+<input id="status" th:value="${sessionStatus}" type="hidden">
+<th:block th:if="${sessionStatus}"></th:block>
 
 
 <div id="snackbar"></div>
