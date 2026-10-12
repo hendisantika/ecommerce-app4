@@ -1,6 +1,8 @@
 # E-Commerce Application 4 🛒
 
-A comprehensive e-commerce web application built with Spring Boot 3, featuring multi-role user management, product
+[![Java CI with Maven](https://github.com/hendisantika/ecommerce-app4/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/ecommerce-app4/actions/workflows/maven.yml)
+
+A comprehensive e-commerce web application built with Spring Boot 4 and Java 25, featuring multi-role user management, product
 catalog, order processing, and administrative controls.
 
 ## 🌟 Features
@@ -40,13 +42,14 @@ catalog, order processing, and administrative controls.
 
 ### Backend
 
-- **Framework**: Spring Boot 3.5.5
-- **Java Version**: 24
-- **Security**: Spring Security 6 with role-based access control
+- **Framework**: Spring Boot 4.1.1 (Spring Framework 7)
+- **Java Version**: 25
+- **Security**: Spring Security 7 with role-based access control
 - **Database**: MySQL 9.4.0
-- **ORM**: Spring Data JPA with Hibernate
+- **ORM**: Spring Data JPA with Hibernate 7
 - **Template Engine**: Thymeleaf 3.1+
-- **Build Tool**: Maven
+- **Build Tool**: Maven (wrapper included)
+- **Testing**: JUnit 5, Spring Boot Test, Testcontainers (MySQL)
 
 ### Frontend
 
@@ -65,9 +68,9 @@ catalog, order processing, and administrative controls.
 
 ### Prerequisites
 
-- Java 24 or higher
-- Docker and Docker Compose
-- Maven 3.6+
+- Java 25 (JDK 25)
+- Docker and Docker Compose (also required to run tests)
+- Maven 3.9+ (or use the bundled `./mvnw`)
 - Git
 
 ### Installation
@@ -162,7 +165,7 @@ spring.servlet.multipart.max-request-size=1MB
 
 ### Security Configuration
 
-- **Spring Security 6** with modern configuration
+- **Spring Security 7** with modern configuration
 - **Role-based access control**: ADMIN, SELLER, CUSTOMER
 - **Password encryption**: BCrypt
 - **Session management**: HTTP session-based authentication
@@ -213,6 +216,14 @@ spring.servlet.multipart.max-request-size=1MB
 ./mvnw test
 ```
 
+Tests use [Testcontainers](https://testcontainers.com/) to start a throwaway `mysql:9.4.0` container
+automatically, so a running Docker daemon is required but no local MySQL setup is needed.
+
+### Continuous Integration
+
+GitHub Actions (`.github/workflows/maven.yml`) builds and tests the project on every push and pull request to
+`main` using Temurin JDK 25.
+
 ### Building for Production
 
 ```bash
@@ -251,9 +262,17 @@ docker-compose down
 
 ## 🔄 Recent Updates
 
+### Java 25 & Spring Boot 4 Upgrade
+
+- ✅ Upgraded to Java 25
+- ✅ Updated to Spring Boot 4.1.1 / Spring Security 7 / Hibernate 7
+- ✅ Migrated `ErrorController` to the new `org.springframework.boot.webmvc.error` package
+- ✅ `DaoAuthenticationProvider` now configured via constructor injection
+- ✅ Integration test runs against MySQL via Testcontainers
+- ✅ GitHub Actions CI on JDK 25
+
 ### Spring Boot 3 Modernization
 
-- ✅ Updated to Spring Boot 3.5.5
 - ✅ Migrated to Jakarta EE (javax → jakarta)
 - ✅ Modern Spring Security configuration
 - ✅ Updated Thymeleaf fragment expressions
